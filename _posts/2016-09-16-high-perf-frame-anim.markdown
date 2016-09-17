@@ -12,7 +12,7 @@ categories: android
 
 ## Bitmap重用技术
 
-在BitmapFactory.Options这个类中有很多有趣的参数，inBitmap就是其中一个。这个接口从API 11引入，我们可以通过这个参数传入一个已经创建好的Bitmap给BitmapFactory，这样BitmapFactory在进行解码的时候就会尽量的复用inBitmap的内存而不是创建一个新的bitmap。对于API 19和以上的系统，得益于新的Bitmap#reconfigure方法，所以只要inBitmap的AllocationByte大于等于待解码图片解码后的体积，BitmapFactory就会尝试复用inBitmap。但是对于API 11～18系统，重用的限制就比较多了，首先，inBitmap必须与要被解码的图片尺寸完全一样，配置也必须一样（例如都是ARGB_8888）。其次，inSampleSize必须为1，也就是不能
+在BitmapFactory.Options这个类中有很多有趣的参数，inBitmap就是其中一个。这个接口从API 11引入，我们可以通过这个参数传入一个已经创建好的Bitmap给BitmapFactory，这样BitmapFactory在进行解码的时候就会尽量的复用inBitmap的内存而不是创建一个新的bitmap。对于API 19和以上的系统，得益于新的Bitmap#reconfigure方法，所以只要inBitmap的AllocationByte大于等于待解码图片解码后的体积，BitmapFactory就会尝试复用inBitmap。但是对于API 11～18系统，重用的限制就比较多了，首先，inBitmap必须与要被解码的图片尺寸完全一样，配置也必须一样（例如都是ARGB_8888）。其次，inSampleSize必须为1，也就是不能在解码时进行缩小操作。
 
 
 ## 边播放边加载
@@ -28,4 +28,4 @@ categories: android
 
 * scale without createScaledBitmap
 
-除了可以使用inSampleSize来了对图片进行缩小之外，还可以使用inDensity和inTargetDensity配合来对图片进行等比例缩放，而无需先解码图片再用Bitmap#createScaledBitmap进行缩放。
+除了可以使用inSampleSize来了对图片进行缩小之外，还可以使用inDensity和inTargetDensity配合来对图片进行等比例缩放，而无需先解码图片再用Bitmap#createScaledBitmap进行缩放。这两个参数可以与inSampleSize配合使用。
