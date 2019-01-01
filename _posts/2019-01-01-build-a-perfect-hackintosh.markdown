@@ -164,7 +164,7 @@ Thread 0 Crashed:: Dispatch queue: com.apple.main-thread
 
 ```
 
-于是我又搜了一圈，发现这个问题是也是因为iGPU导致的。根本原因是我的`ig-platform-id`没有写对。其实[文档](https://hackintosh.gitbook.io/-r-hackintosh-vanilla-desktop-guide/config.plist-per-hardware/coffee-lake#properties)里已经说了正确的配置，对于用独立显卡的情况，这个`ig-platform-id`的值应该设为`0x3E920003`。
+于是我又搜了一圈，发现这个问题是也是因为iGPU导致的。根本原因是我的`ig-platform-id`没有写对。其实[文档](https://hackintosh.gitbook.io/-r-hackintosh-vanilla-desktop-guide/config.plist-per-hardware/coffee-lake#properties)里已经说了正确的配置。在CPU用8700K但是用独立显卡接显示器的情况下，这个`ig-platform-id`的值应该设为`0x3E920003`。如果想了解更多的话可以参考这篇[文章](https://www.insanelymac.com/forum/topic/334899-intel-framebuffer-patching-using-whatevergreen/)，里面详细讨论了多种CPU在多个macOS版本下配置`ig-platform-id`和`framebuffer`的细节。
 
 ### 旋转显示器问题
 我外接了两个显示器，一个旋转了270度。每次重启都之后这个旋转的显示器上的画面都非常诡异。屏幕上的图像实际上是旋转了270度之后的竖条形，但是被横着显示在竖起来的屏幕上。上下都是黑边，而且鼠标和屏幕像素也对不上。在macOS的System Preferences里重新设置旋转角度后又可以正常使用。暂时没有根治的办法，一个workaround是用这个[项目](https://github.com/CdLbB/fb-rotate)在用户登录时自动旋转两次屏幕。用`Automator`制作一个application来调用下面这段脚本，然后把这个application加入`Login Item`即可。
